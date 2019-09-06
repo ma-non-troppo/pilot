@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="./index.css">
+	<script src="./steps.js"></script>
+	<script src="./devie.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script>
+		function animateText(id, text, next) {
+			var offset = 0;
+			var interval = setInterval(function() {
+				if(offset <= text.length) {
+					showTextUntil(id, text, offset++);
+				} else {
+					clearInterval(interval);
+					next();
+				}
+			}, 120);
+		}
+
+		function showTextUntil(id, text, offset) {
+			var element = document.querySelector(id);
+			element.innerText = text.substring(0, offset);
+		}
+
+		function blinkCursor() {
+			var visible = false;
+			setInterval(function() {
+				document.querySelector('#cursor').className = visible ? '' : 'invisible';
+				visible = !visible;
+			}, 400);
+		}
+
+		function showAnimatedTitle() {
+			setTimeout(function() {
+				animateText('#program', 'paytalks for krew', function() {
+					document.querySelector('#program').appendChild(document.createElement('br'));
+					animateText('#title', '어서와~ 개발은 처음이지?', function() {
+						setTimeout(function() {
+							$('#titleArea').slideUp();
+						}, 1000);
+					});
+				});
+			}, 2000);
+		}
+
+		(function() {
+			blinkCursor();
+			showAnimatedTitle();
+		})();
+	</script>
+
+</head>
+<body>
+	<div id="instructionArea" class="board slide white-board">
+		<span>⌥+⌘+J 를 눌러 나타나는 개발자 도구에서<br>
+			<div class="b-gray code">
+				<span>var devie = new DevNewbie(<span class="c-blue">'자신의 LDAP 아이디'</span>);<br>
+				<span class="c-gray small">예시) var devie = new DevNewbie('newt.off');</span><br>
+				devie.start();</span>
+
+			</div>
+			<br>를 입력해 주세요</span>
+	</div>
+	<div id="titleArea" class="board slide black-board">
+		<span id="program"></span>
+		<span id="title"></span>
+		<span id="cursor">_</p>
+	</div>
+
+	<div id="listing1" class="board content-board">
+		<h1>흔한 개발(자)에 대한 오해</h1>
+		<ul>
+			<li>소프트웨어는 바꾸기 쉽다.</li>
+			<li>담당하고 있는 서비스의 모든 것을 안다.</li>
+			<li>본인은 만든 모든 것을 안다.</li>
+			<li>전공을 배워야 개발할 수 있다.</li>
+			<li>똑똑해야 개발할 수 있다.</li>
+			<li>개발을 할 줄 알면 해킹도 할 수 있다.</li>
+		</ul>
+	</div>
+
+	<div id="listing2" class="board content-board">
+		<h2>개발자들은 어떻게 생각하고 만들까?</h2>
+		<ul>
+			<li>어드민에 결제 내역을 만들어 주세요.
+				<ol>
+					<li>결제 아이디, 결제 일시, 사용자 아이디, 결제 수단를 표 형태로 표시</li>
+					<li>카카오계정 이메일로 검색할 수 있게</li>
+					<li>아이디로 검색할 수 있게</li>
+					<li>기간으로 검색할 수 있게</li>
+					<li>한 페이지에 모든 내용이 표시되지 않고 끊어서(pagination) 표시</li>
+				</ol>
+			</li>
+
+			<li>개발자 관점
+				<ol>
+					<li>결제 내역 테이블로부터 화면에 표시할 데이터를 조회</li>
+					<li>연결(Join)할 수 있는 테이블에 이메일이 있는가?, 인덱스가 설정되어 있는가?</li>
+					<li>아이디, 기간 등 검색 조건 항목은 마찬가지</li>
+					<li>페이징 쿼리로 데이터를 조회한다.
+						<ul>
+							<li>정렬 순서는?</li>
+							<li>표에 표시되는 열별로 정렬이 가능해야하는지?</li>
+						</ul>
+					</li>
+					<li>페이징은 어떻게 표시할 것인가?
+						<ul>
+							<li>페이지 번호를 클릭할 수 있게?</li>
+							<li>페이지 크기는 어떻게? 숫자를 입력하거나 선택할 수 있게?</li>
+							<li>가장 첫 페이지, 끝 페이지로 이동할 수 있는 기능 제공?</li>
+						</ul>
+					</li>
+				</ol>
+			</li>
+		</ul>
+	</div>
+
+	<div id="listing3" class="board content-board">
+		<img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/H96566k.jpg" style="margin: auto;">
+	</div>
+
+	<div id="listing4" class="board content-board">
+		<ol>
+			<li>콘솔에서 1 입력하고 엔터</li>
+			<li>1 + 20 입력하고 엔터</li>
+			<li>1 + '20' 입력하고 엔터</li>
+			<li>정사각형의 넓이를 구해봅시다</li>
+			<li>원의 넓이를 구해봅시다.</li>
+			<li>콘솔에 로그 메시지 출력하기</li>
+			<li>경고창을 표시해 봅시다.</li>
+		</ol>
+	</div>
+
+	<div id="listing5" class="board content-board">
+		<table>
+			<thead>
+				<tr>
+					<th>신청자</th>
+					<th>휴가종류</th>
+					<th>신청일자</th>
+				</tr>
+			</thead>
+			<tbody id="leaves">
+			</tbody>
+		</table>
+	</div>
+
+	<template id="template">
+		<tr>
+			<td id="user"></td>
+			<td id="type"></td>
+			<td id="period"></td>
+		</tr>
+	</template>
+</body>
